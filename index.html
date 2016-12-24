@@ -1,0 +1,129 @@
+<html>
+   <head>
+       <title>Quiz</title>
+       <link rel="stylesheet" type="text/css" href="css/common.css">
+       <script src="js/angular.js"></script>
+       <script src="js/jquery.js"></script>
+   </head>
+   <body ng-app ="quiz">
+    
+       <div ng-controller="quiz-ctrl">
+
+           <div id="mydiv">
+              
+               
+                    <div class="quiz-header-div">
+                        <h4 class="quiz-header">{{quizHeader}}</h4>
+                    </div>
+                    <div ng-show="showScr">
+                        <h1 style="text-align:center">Your Score is {{score}}</h1>
+                        <p style="text-align:center;position: relative">Thanks for your participation</p>
+                    </div>
+
+                    <div class="startQuizDiv" ng-hide="isQuizStarted">
+                        <button type="button" ng-click="startQuiz()">Start</button>
+                    </div>
+                     <div ng-show="isQuizStarted && isNextQues">
+                        <div class="quiz-image">
+                            <img ng-src="{{url}}" alt="image">
+                            <input type="text" maxlength="1" ng-repeat="letter in array track by $index" ng-model="letter.name">
+                        </div>
+                        <div class="button">
+                            <button type="button" name="Submit" ng-click="checkAns()">Submit</button> 
+                        </div>
+                    </div>
+           </div>
+
+       </div>
+    
+       
+   </body> 
+   <script type="text/javascript">
+       var app = angular.module("quiz",[]);
+       app.controller("quiz-ctrl",function($scope){
+           
+           //Default scope variables
+           $scope.quizHeader = "Quiz";
+           $scope.isQuizStarted = false;
+           $scope.isNextQues = true;
+           $scope.showScr = false;
+           $scope.score = 0;
+           $scope.quizData  = [
+                                {"url":"images/1.jpg",
+                                "name": "modi"
+                                },
+                                {"url":"images/2.jpg",
+                                "name": "pichai"
+                                },
+                                {"url":"images/3.jpg",
+                                "name": "sachin"
+                                },
+                                {"url":"images/4.jpg",
+                                "name": "salman"
+                                },
+                                {"url":"images/5.jpg",
+                                "name": "trump"
+                                }
+                              ];
+
+         
+         
+           //Default scope method
+           $scope.startQuiz = function(){
+               $scope.isQuizStarted = true;
+               $scope.loadQuestion();
+           }
+
+           $scope.loadQuestion = function(){
+               var random = Math.floor(Math.random() * $scope.quizData.length);
+                $scope.url = $scope.quizData[random].url;
+                $scope.name = $scope.quizData[random].name.split("");
+                $scope.array = [];
+                for(i=0;i< $scope.name.length;i++)
+                {
+                    $scope.array.push({ name: ''});
+                }
+           }
+           
+           $scope.checkAns = function(){
+                var str = "";
+                for(i=0;i<$scope.name.length;i++){
+                    str += $scope.array[i].name;
+                }
+
+                var realStr = $scope.name.join("");
+                var userStr = str.toUpperCase(); 
+                if(realStr.toUpperCase() == userStr){
+                    $scope.score++;
+                }
+                for (var i = 0; i < $scope.quizData.length; i++){
+                    if ($scope.quizData[i].name == realStr){
+                        $scope.quizData.splice(i, 1);
+                        break;
+                    }
+                }
+
+                if($scope.quizData.length > 0) {
+                    $scope.goToNextQuestion();
+                }
+                else{
+                    $scope.showTotalScr();
+                }
+                  
+
+                    //alert("Success!!");
+               
+           };
+           
+           $scope.goToNextQuestion = function(){
+                $scope.loadQuestion();
+           }
+
+           $scope.showTotalScr = function(){
+               $scope.showScr = true;
+               $scope.isNextQues = false;
+           }
+           
+       });
+    </script>
+</html>

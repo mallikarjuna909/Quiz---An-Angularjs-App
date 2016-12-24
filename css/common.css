@@ -1,0 +1,47 @@
+#mydiv {
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    width:30em;
+    height:18em;
+    margin-top: -9em; /*set to a negative number 1/2 of your height*/
+    margin-left: -15em; /*set to a negative number 1/2 of your width*/
+    border: 1px solid #ccc;
+    background-color: #f3f3f3;
+}
+.quiz-header{
+    text-align: center;
+}
+.quiz-header-div{
+    background: wheat;
+}
+.quiz-header-div h4{
+    margin: 0px;
+    padding: 10px;
+}
+.quiz-image{
+    /*display: inline-flex;*/
+}
+img{
+    width: 10em;
+    height: 10em;
+    border-radius: 100px;
+    padding: 10px;
+}
+input[type='text']{
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    margin: 5px;
+    text-transform: uppercase;
+}
+.button{
+    margin-top: 15px;
+    text-align: center
+}
+.startQuizDiv{
+    top: 50%;
+    left: 49%;
+    position: fixed;
+}
+
